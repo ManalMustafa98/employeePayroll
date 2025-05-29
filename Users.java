@@ -4,7 +4,7 @@ import java.util.regex.Pattern;
 
 public abstract class Users {
     protected String name;
-    protected String contact;      // replacing address with contact
+    protected String contact;
     protected String username;
     protected String password;
     protected String role;
