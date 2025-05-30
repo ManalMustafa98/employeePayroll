@@ -8,4 +8,12 @@ public class ViewDetails {
     private JTextField salaryTextField;
     private JTextField contactTextField;
     private JTextField departmentTextField;
+    private JButton backButton;
+    private JPanel panel1;
+    public ViewDetails(JFrame frame, Employee employee) {}
+    public JPanel getPanel() {
+        return panel1;
+    }
+
+
 }
