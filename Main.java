@@ -6,7 +6,7 @@ public class Main {
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("Employee Payroll System");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(800, 600);
+            frame.setSize(700, 500);
             frame.setLocationRelativeTo(null); // Center on screen
             WelcomePage welcomePanel = new WelcomePage(frame);
             frame.setContentPane(welcomePanel.getPanel());
