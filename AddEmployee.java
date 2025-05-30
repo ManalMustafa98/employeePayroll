@@ -36,6 +36,13 @@ public class AddEmployee {
                 JOptionPane.showMessageDialog(rootPanel, "✅ Employee Created!\nUsername: " +
                         emp.getUsername() + "\nPassword: " + emp.getPassword());
 
+                // ✅ Clear fields after success
+                nameField.setText("");
+                contactField.setText("");
+                departmentField.setText("");
+                ageTextField.setText("");
+                salaryField.setText("");
+
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(rootPanel, "❌ Error: " + ex.getMessage());
             }

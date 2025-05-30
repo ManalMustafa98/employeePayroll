@@ -26,6 +26,10 @@ public class AddAdmin {
                 JOptionPane.showMessageDialog(Panel1, "✅ Admin Created!\nUsername: " +
                         newAdmin.getUsername() + "\nPassword: " + newAdmin.getPassword());
 
+                nameTextField.setText("");
+                contactTextField.setText("");
+                ageTextField1.setText("");
+
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(Panel1, "❌ Error: " + ex.getMessage());
             }
