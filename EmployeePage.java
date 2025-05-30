@@ -70,6 +70,22 @@ public class EmployeePage {
                 frame.revalidate();
             }
         });
+
+        VIEWPAYSLIPButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.setContentPane(new ViewPayslip_EmployeePage(frame, currentEmployee).getPanel() );
+                frame.revalidate();
+            }
+        });
+
+        VIEWPAYSLIPButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.setContentPane(new ViewDetails(frame, currentEmployee).getPanel());
+                frame.revalidate();
+            }
+        });
     }
 
     public JPanel getPanel() {
