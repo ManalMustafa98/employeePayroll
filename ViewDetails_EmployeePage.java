@@ -35,7 +35,7 @@ public class ViewDetails_EmployeePage {
 
         // Back button functionality
         backButton.addActionListener(e -> {
-            frame.setContentPane(new EmployeePage(emp, frame).getPanel());
+            frame.setContentPane(new EmployeePage(frame, emp).getPanel());
             frame.revalidate();
         });
     }
