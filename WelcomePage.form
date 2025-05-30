@@ -35,7 +35,7 @@
         </constraints>
         <properties>
           <enabled value="true"/>
-          <font name="Arial" size="26" style="0"/>
+          <font name="Arial" size="26" style="1"/>
           <text value="Continue As Admin"/>
         </properties>
       </component>

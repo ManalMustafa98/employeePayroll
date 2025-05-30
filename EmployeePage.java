@@ -23,8 +23,8 @@ public class EmployeePage {
         String month = today.getMonth().toString();
         int year = today.getYear();
 
-        welcomeLabel.setText("Welcome, " + employee.getName() + "!");
-        currentAttendance = Attendance.loadFromFile(employee.getUsername(), month, year);
+//        welcomeLabel.setText("Welcome, " + employee.getName() + "!");
+//        currentAttendance = Attendance.loadFromFile(employee.getUsername(), month, year);
 
         CHECKINButton.addActionListener(new ActionListener() {
             @Override
