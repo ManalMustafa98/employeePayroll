@@ -3,7 +3,7 @@
   <grid id="27dc6" binding="rootPanel" layout-manager="GridLayoutManager" row-count="12" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="500" height="553"/>
+      <xy x="20" y="20" width="500" height="675"/>
     </constraints>
     <properties>
       <background color="-4276546"/>
@@ -45,16 +45,6 @@
       <component id="a9e19" class="javax.swing.JTextField" binding="contactField">
         <constraints>
           <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="-1"/>
-          </grid>
-        </constraints>
-        <properties>
-          <font name="Arial" size="20" style="0"/>
-        </properties>
-      </component>
-      <component id="2fa20" class="javax.swing.JTextField" binding="departmentField">
-        <constraints>
-          <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
@@ -107,7 +97,6 @@
         <properties>
           <font name="Arial" size="24" style="0"/>
           <foreground color="-16777216"/>
-          <labelFor value="2fa20"/>
           <text value="Department"/>
         </properties>
       </component>
@@ -130,6 +119,21 @@
         </constraints>
         <properties>
           <font name="Arial" size="20" style="0"/>
+        </properties>
+      </component>
+      <component id="69e44" class="javax.swing.JComboBox" binding="departmentComboBox">
+        <constraints>
+          <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <model>
+            <item value="HR"/>
+            <item value="MARKETING"/>
+            <item value="SALES"/>
+            <item value="FINANCE"/>
+            <item value="IT"/>
+            <item value="OPERATIONS"/>
+          </model>
         </properties>
       </component>
     </children>
