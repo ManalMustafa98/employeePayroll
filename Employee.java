@@ -4,7 +4,6 @@ import java.util.*;
 
 public class Employee extends Users {
     private String age;
-    private String address;
     private double basicSalary;
     private Department department;
 
@@ -14,8 +13,8 @@ public class Employee extends Users {
         department.addEmployee(this);
     }
 
-    public Employee(String username, String password, String name, Department department) {
-        super(username, password, name, department.getName().toString(), "employee");
+    public Employee(String username, String password, String contact ,String name, Department department) {
+        super(username, password, name, contact, "employee");
         this.department = department;
         department.addEmployee(this);
     }
@@ -23,7 +22,7 @@ public class Employee extends Users {
     @Override
     public void saveToFiles() throws IOException {
         appendToFile(USERS_FILE, toUserFileLine());
-        appendToFile(DETAILS_FILE, username + "," + name + "," + department.getName() + "," + age + "," + address + "," + basicSalary);
+        appendToFile(DETAILS_FILE, username + "," + name + "," + department.getName() + "," + age + "," + contact + "," + basicSalary);
     }
 
     public void viewPayslip(String month, int year) {
@@ -50,13 +49,12 @@ public class Employee extends Users {
     }
 
     public void setAge(String age) { this.age = age; }
-    public void setAddress(String address) { this.address = address; }
+
     public void setBasicSalary(double basicSalary) { this.basicSalary = basicSalary; }
 
     public String getAge() { return age; }
-    public String getAddress() { return address; }
-    public double getBasicSalary() { return basicSalary; }
 
+    public double getBasicSalary() { return basicSalary; }
     public Department getDepartment() {
         return department;
     }

@@ -17,10 +17,8 @@ public class Main {
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setSize(600, 400);
             frame.setLocationRelativeTo(null); // Center on screen
-
             WelcomePage welcomePanel = new WelcomePage(frame);
             frame.setContentPane(welcomePanel.getPanel());
-
             frame.setVisible(true);
         });
     }
