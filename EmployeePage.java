@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 
 public class EmployeePage {
     private JPanel rootPanel;
@@ -8,4 +9,12 @@ public class EmployeePage {
     private JButton LOGOUTButton;
     private JButton VIEWDETAILSButton;
 
+    public EmployeePage(Employee emp, JFrame frame) {
+
+    }
+
+    public Container getPanel() {
+
+        return rootPanel;
+    }
 }
