@@ -8,6 +8,7 @@
     <properties>
       <alignmentX value="1.0"/>
       <background color="-1"/>
+      <font name="Arial Black" size="30" style="1"/>
     </properties>
     <border type="none" title="VIEW DETAILS " title-position="2"/>
     <children>
@@ -57,7 +58,7 @@
             </constraints>
             <properties>
               <font name="Arial" size="14" style="1"/>
-              <text value="Departtment:"/>
+              <text value="Department:"/>
             </properties>
           </component>
           <component id="f5b51" class="javax.swing.JLabel">
