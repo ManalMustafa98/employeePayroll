@@ -20,24 +20,22 @@
           <text value="Welcome To WorkFlux"/>
         </properties>
       </component>
-      <component id="b3603" class="javax.swing.JButton" binding="continueAsEmployeeButton" default-binding="true">
+      <component id="e7d8a" class="javax.swing.JButton" binding="continueAsEmployeeButton" default-binding="true">
         <constraints>
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <enabled value="true"/>
-          <font name="Arial" size="26" style="0"/>
-          <foreground color="-16777216"/>
+          <font name="Arial" size="26" style="1"/>
           <text value="Continue As Employee"/>
         </properties>
       </component>
-      <component id="e54c8" class="javax.swing.JButton" binding="continueAsAdminButton" default-binding="true">
+      <component id="ebec9" class="javax.swing.JButton" binding="continueAsAdminButton" default-binding="true">
         <constraints>
           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <enabled value="true"/>
           <font name="Arial" size="26" style="0"/>
-          <foreground color="-16777216"/>
           <text value="Continue As Admin"/>
         </properties>
       </component>
