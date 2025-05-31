@@ -4,7 +4,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class Attendance {
-    private static final String ATTENDANCE_FILE = "attendance.txt";
+    protected static final String ATTENDANCE_FILE = "attendance.txt";
     private static final DateTimeFormatter DATE_FMT = DateTimeFormatter.ISO_LOCAL_DATE;
     private static final DateTimeFormatter TIME_FMT = DateTimeFormatter.ofPattern("HH:mm");
     private static final String NULL_TOKEN = "null";
