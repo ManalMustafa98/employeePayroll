@@ -29,7 +29,7 @@ public class EmployeeLogin {
         });
     }
 
-    private boolean isValidEmployee(String username, String password) {
+    public boolean isValidEmployee(String username, String password) {
         try (BufferedReader br = new BufferedReader(new FileReader(Users.USERS_FILE))) {
             String line;
             while ((line = br.readLine()) != null) {
