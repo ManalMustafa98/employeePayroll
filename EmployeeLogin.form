@@ -60,7 +60,7 @@
           <font name="Arial" size="20" style="0"/>
         </properties>
       </component>
-      <component id="8c6e6" class="javax.swing.JPasswordField" binding="JPasswordField">
+      <component id="8c6e6" class="javax.swing.JPasswordField" binding="passwordField">
         <constraints>
           <grid row="2" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
