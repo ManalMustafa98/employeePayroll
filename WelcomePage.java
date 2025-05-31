@@ -8,13 +8,11 @@ public class WelcomePage {
     public WelcomePage(JFrame frame) {
         continueAsEmployeeButton.addActionListener(e -> {
             frame.setContentPane(new EmployeeLogin(frame).getPanel());
-            frame.pack();
             frame.revalidate();
         });
 
         continueAsAdminButton.addActionListener(e -> {
             frame.setContentPane(new AdminLogin(frame).getPanel());
-            frame.pack();
             frame.revalidate();
         });
     }
