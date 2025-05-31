@@ -1,23 +1,25 @@
 import javax.swing.*;
 
-public class WelcomePage{
-    private JPanel panel1;
+public class WelcomePage {
+    private JPanel rootPanel;
     private JButton continueAsEmployeeButton;
     private JButton continueAsAdminButton;
 
     public WelcomePage(JFrame frame) {
-        continueAsAdminButton.addActionListener(e -> {
-            frame.setContentPane(new AdminLogin(frame).getPanel());
+        continueAsEmployeeButton.addActionListener(e -> {
+            frame.setContentPane(new EmployeeLogin(frame).getPanel());
+            frame.pack();
             frame.revalidate();
         });
 
-        continueAsEmployeeButton.addActionListener(e -> {
-            frame.setContentPane(new EmployeeLogin(frame).getPanel());
+        continueAsAdminButton.addActionListener(e -> {
+            frame.setContentPane(new AdminLogin(frame).getPanel());
+            frame.pack();
             frame.revalidate();
         });
     }
 
     public JPanel getPanel() {
-        return panel1;
+        return rootPanel;
     }
 }

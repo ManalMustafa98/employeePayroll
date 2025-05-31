@@ -26,7 +26,7 @@ public class Payroll<T extends Employee> {
     }
 
     // 🔹 Tax calculation
-    private double calculateTax(double salary) {
+    public double calculateTax(double salary) {
         if (salary <= 25000) return 0;
         if (salary <= 50000) return 0.05 * salary;
         if (salary <= 100000) return 0.10 * salary;
@@ -34,20 +34,20 @@ public class Payroll<T extends Employee> {
     }
 
     // 🔹 Deduction for extra absences
-    private double calculateDeduction() {
+ public double calculateDeduction() {
         int absent = attendance.getAbsentDays();
         int extraAbsent = Math.max(0, absent - FREE_LEAVES);
         return extraAbsent * LEAVE_DEDUCTION_RATE;
     }
 
     // 🔹 Bonus for overtime
-    private double calculateBonus() {
+    public double calculateBonus() {
         int overtimeHours = attendance.calculateMonthlyOvertime();
         return overtimeHours * OVERTIME_RATE;
     }
 
     // 🔹 Payslip generation
-    public void generatePayslip() {
+ public void generatePayslip() {
         double basic = employee.getBasicSalary();
         double allowance = 0.10 * basic;
         double tax = calculateTax(basic);

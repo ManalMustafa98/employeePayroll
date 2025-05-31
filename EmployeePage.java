@@ -1,92 +1,108 @@
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.time.LocalDate;
 
 public class EmployeePage {
-    private JPanel panel1;
+    private JPanel rootPanel;
     private JLabel welcomeLabel;
-    private JButton CHECKINButton;
-    private JButton CHECKOUTButton;
-    private JButton VIEWPAYSLIPButton;
-    private JButton LOGOUTButton;
-    private JButton VIEWDETAILSButton;
+    private JButton checkInButton;
+    private JButton checkOutButton;
+    private JButton viewDetailsButton;
+    private JButton viewPayslipButton;
+    private JButton logoutButton;
 
-    private Attendance currentAttendance;
-    private boolean hasCheckedIn = false;
-    private boolean hasCheckedOut = false;
+    private final Employee employee;
+    private final Attendance attendance;
+    private boolean hasCheckedIn;
+    private boolean hasCheckedOut;
 
     public EmployeePage(JFrame frame, Employee employee) {
+        this.employee   = employee;
         LocalDate today = LocalDate.now();
-        String month = today.getMonth().toString();
-        int year = today.getYear();
+        String month    = today.getMonth().toString();
+        int year        = today.getYear();
 
-//        welcomeLabel.setText("Welcome, " + employee.getName() + "!");
-//        currentAttendance = Attendance.loadFromFile(employee.getUsername(), month, year);
+        // Load and inspect today’s record
+        attendance     = Attendance.loadFromFile(employee.getUsername(), month, year);
+        DailyAttendance record = attendance.getRecordByDate(today);
+        if (record != null) {
+            hasCheckedIn  = (record.getCheckIn()  != null);
+            hasCheckedOut = (record.getCheckOut() != null);
+        }
 
-        CHECKINButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (!hasCheckedIn) {
-                    String inTime = JOptionPane.showInputDialog(frame, "Enter check-in time (e.g. 09:00):");
-                    if (inTime != null && !inTime.trim().isEmpty()) {
-                        currentAttendance.checkIn(LocalDate.now(), inTime.trim());
-                        JOptionPane.showMessageDialog(frame, "✅ Checked in at " + inTime);
-                        hasCheckedIn = true;
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(frame, "⚠️ You already checked in today.");
-                }
-            }
+        // Set welcome text
+        welcomeLabel.setText("Welcome, " + employee.getName() + "!");
+
+        // Initialize buttons
+        checkInButton.setEnabled(!hasCheckedIn);
+        checkOutButton.setEnabled(hasCheckedIn && !hasCheckedOut);
+
+        // Wire actions
+        checkInButton.addActionListener(e -> handleCheckIn(frame));
+        checkOutButton.addActionListener(e -> handleCheckOut(frame));
+
+        viewDetailsButton.addActionListener(e -> {
+            frame.setContentPane(new ViewDetails(frame, employee).getPanel());
+
+            frame.pack(); frame.revalidate();
         });
 
-        CHECKOUTButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (hasCheckedIn && !hasCheckedOut) {
-                    String outTime = JOptionPane.showInputDialog(frame, "Enter check-out time (e.g. 17:00):");
-                    if (outTime != null && !outTime.trim().isEmpty()) {
-                        currentAttendance.checkOut(LocalDate.now(), outTime.trim());
-                        currentAttendance.saveToFile();
-                        JOptionPane.showMessageDialog(frame, "✅ Checked out at " + outTime);
-                        hasCheckedOut = true;
-                    }
-                } else if (!hasCheckedIn) {
-                    JOptionPane.showMessageDialog(frame, "⚠️ You must check in first.");
-                } else {
-                    JOptionPane.showMessageDialog(frame, "⚠️ You already checked out today.");
-                }
-            }
+        viewPayslipButton.addActionListener(e -> {
+            frame.setContentPane(new ViewPayslip_EmployeePage(frame, employee).getPanel());
+            frame.pack(); frame.revalidate();
         });
 
-
-
-        LOGOUTButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.setContentPane(new WelcomePage(frame).getPanel());
-                frame.revalidate();
-            }
-        });
-
-        VIEWPAYSLIPButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.setContentPane(new ViewPayslip_EmployeePage(frame, employee).getPanel() );
-                frame.revalidate();
-            }
-        });
-
-        VIEWPAYSLIPButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.setContentPane(new ViewDetails(frame, employee).getPanel());
-                frame.revalidate();
-            }
+        logoutButton.addActionListener(e -> {
+            frame.setContentPane(new WelcomePage(frame).getPanel());
+            frame.pack(); frame.revalidate();
         });
     }
 
+    private void handleCheckIn(JFrame frame) {
+        LocalDate today = LocalDate.now();
+        String inTime = JOptionPane.showInputDialog(
+                frame,
+                "Enter check-in time (HH:mm):",
+                "Check In",
+                JOptionPane.QUESTION_MESSAGE
+        );
+        if (inTime != null && !inTime.isBlank()) {
+            attendance.checkIn(today, inTime.trim());
+            attendance.saveToFile();
+            hasCheckedIn = true;
+            checkInButton.setEnabled(false);
+            checkOutButton.setEnabled(true);
+            JOptionPane.showMessageDialog(
+                    frame,
+                    "✅ Checked in at " + inTime,
+                    "Success",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+        }
+    }
+
+    private void handleCheckOut(JFrame frame) {
+        LocalDate today = LocalDate.now();
+        String outTime = JOptionPane.showInputDialog(
+                frame,
+                "Enter check-out time (HH:mm):",
+                "Check Out",
+                JOptionPane.QUESTION_MESSAGE
+        );
+        if (outTime != null && !outTime.isBlank()) {
+            attendance.checkOut(today, outTime.trim());
+            attendance.saveToFile();
+            hasCheckedOut = true;
+            checkOutButton.setEnabled(false);
+            JOptionPane.showMessageDialog(
+                    frame,
+                    "✅ Checked out at " + outTime,
+                    "Success",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+        }
+    }
+
     public JPanel getPanel() {
-        return panel1;
+        return rootPanel;
     }
 }

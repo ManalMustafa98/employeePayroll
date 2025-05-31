@@ -1,26 +1,56 @@
 import java.io.*;
 import java.util.*;
 
+/**
+ * Admin extends Users.  Each Admin has a name, contact, generated username/password, role="admin", and an age.
+ */
 public class Admin extends Users {
     private int age;
 
-    // Constructor for new admin creation (no department)
+    /**
+     * Constructor for creating a brand‐new Admin.
+     * Automatically calls Users(name, contact, "admin") to generate username/password.
+     */
     public Admin(String name, String contact, int age) throws IOException {
         super(name, contact, "admin");
         this.age = age;
     }
 
-    // Constructor for loading from file
+    /**
+     * Constructor for rebuilding an Admin from file.
+     * Parameters: (username, password, name, contact).
+     * The age is stored in the details line, so setAge must be called after loading.
+     */
     public Admin(String username, String password, String name, String contact) {
         super(username, password, name, contact, "admin");
     }
 
+    /**
+     * Save both login credentials and details.
+     * In Users.java, saveToFiles() calls:
+     *   appendToFile(USERS_FILE, toUserFileLine());
+     *   appendToFile(DETAILS_FILE, toDetailsFileLine());
+     */
+    // No need to override saveToFiles()—inherit from Users
+
+    /**
+     * Defines how this Admin’s details are written to usersdetails.txt.
+     * Format: username,name,contact,age,admin
+     */
     @Override
-    public void saveToFiles() throws IOException {
-        appendToFile(USERS_FILE, toUserFileLine());
-        appendToFile(DETAILS_FILE, toDetailsFileLine());
+    public String toDetailsFileLine() {
+        return String.join(",",
+                getUsername(),
+                getName(),
+                getContact(),
+                String.valueOf(age),
+                "admin"
+        );
     }
 
+    /**
+     * Displays the CLI menu for this Admin (view users, add employees/admins, remove, change password).
+     */
     public void showMenu() {
         Scanner scanner = new Scanner(System.in);
         int choice;
@@ -35,7 +65,7 @@ public class Admin extends Users {
             System.out.println("6. Logout");
             System.out.print("Enter choice: ");
             choice = scanner.nextInt();
-            scanner.nextLine();
+            scanner.nextLine(); // consume newline
 
             switch (choice) {
                 case 1 -> viewAllUsers();
@@ -60,14 +90,15 @@ public class Admin extends Users {
             String name = scanner.nextLine();
             System.out.print("Enter Admin Contact (e.g. +1234567890): ");
             String contact = scanner.nextLine();
+            System.out.print("Enter Admin Age: ");
+            int age = Integer.parseInt(scanner.nextLine());
 
-            Admin newAdmin = new Admin(name, contact,age);
+            Admin newAdmin = new Admin(name, contact, age);
             newAdmin.saveToFiles();
 
-            System.out.println(" Admin created:");
+            System.out.println("✅ Admin created:");
             System.out.println("Username: " + newAdmin.getUsername());
             System.out.println("Password: " + newAdmin.getPassword());
-
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
@@ -77,12 +108,17 @@ public class Admin extends Users {
         try {
             System.out.print("Name: ");
             String name = scanner.nextLine();
-            System.out.print("Department: ");
-            Department dept = new Department(DepartmentName.valueOf(scanner.nextLine()));
+
+            System.out.print("Department (e.g. HR, IT, FINANCE): ");
+            DepartmentName deptEnum = DepartmentName.valueOf(scanner.nextLine().trim().toUpperCase());
+            Department dept = Department.getInstance(deptEnum);
+
             System.out.print("Age: ");
             String age = scanner.nextLine();
+
             System.out.print("Contact (e.g. +1234567890): ");
             String contact = scanner.nextLine();
+
             System.out.print("Salary: ");
             Double salary = scanner.nextDouble();
             scanner.nextLine();  // consume leftover newline
@@ -95,7 +131,6 @@ public class Admin extends Users {
             System.out.println("\u2705 Employee created:");
             System.out.println("Username: " + emp.getUsername());
             System.out.println("Password: " + emp.getPassword());
-
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
             scanner.nextLine(); // clear buffer if error happens during nextDouble
@@ -110,12 +145,10 @@ public class Admin extends Users {
             System.out.println("\u274C You cannot delete your own account.");
             return;
         }
-
         if (target.equals(getSuperAdminUsername())) {
             System.out.println("\u274C You cannot delete the Super Admin.");
             return;
         }
-
         if (removeLineFromFile(USERS_FILE, target) && removeLineFromFile(DETAILS_FILE, target)) {
             System.out.println("\u2705 Removed user: " + target);
         } else {
@@ -133,7 +166,6 @@ public class Admin extends Users {
             System.out.println("\u274C Only Super Admin can change its own password.");
             return;
         }
-
         if (updatePassword(uname, newPass)) {
             System.out.println("\u2705 Password updated for " + uname);
         } else {
@@ -151,15 +183,16 @@ public class Admin extends Users {
             System.out.println("---------------------------------------------------------------");
 
             String userLine, detailLine;
-            while ((userLine = userReader.readLine()) != null && (detailLine = detailReader.readLine()) != null) {
+            while ((userLine = userReader.readLine()) != null &&
+                    (detailLine = detailReader.readLine()) != null) {
                 String[] u = userLine.split(" ");
                 String[] d = detailLine.split(",");
-                if (u.length < 3 || d.length < 3) continue;
+                if (u.length < 3 || d.length < 4) continue;  // ensure enough fields
                 String username = u[0];
-                String name = d[1];
-                String role = u[2];
-                String contact = d[2];
-                String extra = ""; // Can be extended, e.g., Employee salary or department if needed
+                String name     = d[1];
+                String role     = u[2];
+                String contact  = u[4]; // “contact” is the 4th index in Admin’s detail line
+                String extra    = "Age: " + d[3]; // displayAdmin age in extra column
 
                 System.out.printf("%-12s | %-20s | %-15s | %-10s | %-10s\n",
                         username, name, role, contact, extra);
@@ -169,7 +202,7 @@ public class Admin extends Users {
         }
     }
 
-    private boolean isSuperAdmin() {
+    protected boolean isSuperAdmin() {
         return this.getUsername().equals(getSuperAdminUsername());
     }
 
@@ -215,7 +248,7 @@ public class Admin extends Users {
 
     private boolean updatePassword(String username, String newPassword) {
         File inputFile = new File(USERS_FILE);
-        File tempFile = new File("temp_users.txt");
+        File tempFile  = new File("temp_users.txt");
 
         try (
                 BufferedReader reader = new BufferedReader(new FileReader(inputFile));
