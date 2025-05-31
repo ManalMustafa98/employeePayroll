@@ -2,10 +2,12 @@ import java.io.*;
 import java.util.*;
 
 public class Admin extends Users {
+    private int age;
 
     // Constructor for new admin creation (no department)
-    public Admin(String name, String contact) throws IOException {
+    public Admin(String name, String contact, int age) throws IOException {
         super(name, contact, "admin");
+        this.age = age;
     }
 
     // Constructor for loading from file
@@ -59,7 +61,7 @@ public class Admin extends Users {
             System.out.print("Enter Admin Contact (e.g. +1234567890): ");
             String contact = scanner.nextLine();
 
-            Admin newAdmin = new Admin(name, contact);
+            Admin newAdmin = new Admin(name, contact,age);
             newAdmin.saveToFiles();
 
             System.out.println(" Admin created:");

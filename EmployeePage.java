@@ -12,13 +12,11 @@ public class EmployeePage {
     private JButton LOGOUTButton;
     private JButton VIEWDETAILSButton;
 
-    private Employee currentEmployee;
     private Attendance currentAttendance;
     private boolean hasCheckedIn = false;
     private boolean hasCheckedOut = false;
 
     public EmployeePage(JFrame frame, Employee employee) {
-        this.currentEmployee = employee;
         LocalDate today = LocalDate.now();
         String month = today.getMonth().toString();
         int year = today.getYear();
@@ -74,7 +72,7 @@ public class EmployeePage {
         VIEWPAYSLIPButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.setContentPane(new ViewPayslip_EmployeePage(frame, currentEmployee).getPanel() );
+                frame.setContentPane(new ViewPayslip_EmployeePage(frame, employee).getPanel() );
                 frame.revalidate();
             }
         });
@@ -82,7 +80,7 @@ public class EmployeePage {
         VIEWPAYSLIPButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.setContentPane(new ViewDetails(frame, currentEmployee).getPanel());
+                frame.setContentPane(new ViewDetails(frame, employee).getPanel());
                 frame.revalidate();
             }
         });

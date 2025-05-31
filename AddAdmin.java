@@ -8,11 +8,13 @@ public class AddAdmin {
     private JTextField contactTextField;
     private JButton addButton;
     private JButton backButton;
+    private JTextField ageTextField;
 
     public AddAdmin(JFrame frame, Admin currentAdmin) {
         addButton.addActionListener(e -> {
             String name = nameTextField.getText().trim();
             String contact = contactTextField.getText().trim();
+            int age = Integer.parseInt(ageTextField.getText().trim());
 
             try {
                 if (!Admin.isValidName(name) || !Admin.isValidContact(contact)) {
@@ -20,7 +22,7 @@ public class AddAdmin {
                     return;
                 }
 
-                Admin newAdmin = new Admin(name, contact);
+                Admin newAdmin = new Admin(name,contact,age);
                 newAdmin.saveToFiles();
 
                 JOptionPane.showMessageDialog(Panel1, "✅ Admin Created!\nUsername: " +
