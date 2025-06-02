@@ -22,7 +22,6 @@ public class AddAdmin {
         // 3️⃣ Back-button action
         backButton.addActionListener(e -> {
             frame.setContentPane(new AdminPage(frame, currentAdmin).getPanel());
-            frame.pack();
             frame.revalidate();
         });
     }

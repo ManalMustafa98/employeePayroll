@@ -53,7 +53,7 @@ public class EmployeePage {
 
         logoutButton.addActionListener(e -> {
             frame.setContentPane(new WelcomePage(frame).getPanel());
-            frame.pack(); frame.revalidate();
+            frame.revalidate();
         });
     }
 

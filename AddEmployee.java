@@ -26,7 +26,6 @@ public class AddEmployee {
         // 4️⃣ Handle BACK button click
         backButton.addActionListener(e -> {
             frame.setContentPane(new AdminPage(frame, currentAdmin).getPanel());
-            frame.pack();
             frame.revalidate();
         });
     }

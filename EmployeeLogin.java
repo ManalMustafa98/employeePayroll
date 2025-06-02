@@ -58,7 +58,6 @@ public class EmployeeLogin {
         // 3️⃣ Handle Back click
         backButton.addActionListener(e -> {
             frame.setContentPane(new WelcomePage(frame).getPanel());
-            frame.pack();
             frame.revalidate();
         });
     }

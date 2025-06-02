@@ -34,7 +34,6 @@ public class ViewAttendanceForAllEmployee_Admin {
         // 3) Back button goes to AdminPage
         backButton.addActionListener(e -> {
             frame.setContentPane(new AdminPage(frame, admin).getPanel());
-            frame.pack();
             frame.revalidate();
         });
     }
