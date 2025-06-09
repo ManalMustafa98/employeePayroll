@@ -30,16 +30,15 @@ public class ViewDetails {
 
         for (JTextField field : fields) {
             field.setEditable(false);
-            field.setBorder(null);
+//            field.setBorder(null);
             field.setBackground(null);
             field.setForeground(Color.BLACK);
-            field.setFont(new Font("SansSerif", Font.PLAIN, 13));
+            field.setFont(new Font("SansSerif", Font.PLAIN, 18));
         }
 
         // Back to employee page
         backButton.addActionListener(e -> {
             frame.setContentPane(new EmployeePage(frame, employee).getPanel());
-            frame.pack();
             frame.revalidate();
         });
     }
