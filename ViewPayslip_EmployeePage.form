@@ -36,7 +36,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="dbce1" class="javax.swing.JTextField" binding="textField1" default-binding="true">
+          <component id="dbce1" class="javax.swing.JTextField" binding="basicSalaryTextField" default-binding="true">
             <constraints>
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
@@ -44,7 +44,7 @@
             </constraints>
             <properties/>
           </component>
-          <component id="f4d89" class="javax.swing.JTextField" binding="textField2" default-binding="true">
+          <component id="f4d89" class="javax.swing.JTextField" binding="taxTextField" default-binding="true">
             <constraints>
               <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
@@ -52,7 +52,7 @@
             </constraints>
             <properties/>
           </component>
-          <component id="58254" class="javax.swing.JTextField" binding="textField3" default-binding="true">
+          <component id="58254" class="javax.swing.JTextField" binding="allowanceTextField" default-binding="true">
             <constraints>
               <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
@@ -68,7 +68,7 @@
             </constraints>
             <properties/>
           </component>
-          <component id="6b9a6" class="javax.swing.JTextField" binding="textField5" default-binding="true">
+          <component id="6b9a6" class="javax.swing.JTextField" binding="bonusTextField" default-binding="true">
             <constraints>
               <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
@@ -76,7 +76,7 @@
             </constraints>
             <properties/>
           </component>
-          <component id="47d38" class="javax.swing.JTextField" binding="textField6" default-binding="true">
+          <component id="47d38" class="javax.swing.JTextField" binding="deductionTextField" default-binding="true">
             <constraints>
               <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
@@ -89,7 +89,9 @@
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Label"/>
+              <font name="Arial" size="24" style="0"/>
+              <labelFor value="dbce1"/>
+              <text value="BasicSalary:"/>
             </properties>
           </component>
           <component id="89673" class="javax.swing.JLabel">
@@ -97,7 +99,9 @@
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Label"/>
+              <font name="Arial" size="24" style="0"/>
+              <labelFor value="6b9a6"/>
+              <text value="Bonus:"/>
             </properties>
           </component>
           <component id="5c010" class="javax.swing.JLabel">
@@ -105,7 +109,9 @@
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Label"/>
+              <font name="Arial" size="24" style="0"/>
+              <labelFor value="f4d89"/>
+              <text value="Tax:"/>
             </properties>
           </component>
           <component id="5c556" class="javax.swing.JLabel">
@@ -113,7 +119,9 @@
               <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Label"/>
+              <font name="Arial" size="24" style="0"/>
+              <labelFor value="47d38"/>
+              <text value="Deduction:"/>
             </properties>
           </component>
           <component id="767ff" class="javax.swing.JLabel">
@@ -121,7 +129,9 @@
               <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Allowance"/>
+              <font name="Arial" size="24" style="0"/>
+              <labelFor value="58254"/>
+              <text value="Allowance:"/>
             </properties>
           </component>
           <component id="6e521" class="javax.swing.JLabel">

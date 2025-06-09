@@ -14,24 +14,22 @@ public class AddEmployee {
         ADDButton.addActionListener(e -> {
             String name = nameField.getText().trim();
             String contact = contactField.getText().trim();
-            String ageText = ageTextField.getText().trim();
+            String age = ageTextField.getText().trim();
             String salaryText = salaryField.getText().trim();
 
             try {
-                int age = Integer.parseInt(ageText); // ✅ Parse age outside the if()
-
-                if (!Admin.isValidName(name) || !Admin.isValidContact(contact) || !Admin.isValidAge(age)) { // ✅ Fixed logic
-                    JOptionPane.showMessageDialog(rootPanel, "Invalid name, contact, or age format.");
+                if (!Admin.isValidName(name) || !Admin.isValidContact(contact) || Admin.isValidAge(Integer.parseInt(age))) {
+                    JOptionPane.showMessageDialog(rootPanel, "Invalid name or contact format.");
                     return;
                 }
 
-                String selectedDept = ((DepartmentName) departmentField.getSelectedItem()).name();
-                Department department = Department.getInstance(DepartmentName.valueOf(selectedDept));
+                String selectedDept = (String) departmentField.getSelectedItem();
+                Department department = new Department(DepartmentName.valueOf(selectedDept));
 
                 double salary = Double.parseDouble(salaryText);
 
                 Employee emp = new Employee(name, contact, department);
-                emp.setAge(ageText);
+                emp.setAge(age);
                 emp.setBasicSalary(salary);
                 emp.saveToFiles();
 

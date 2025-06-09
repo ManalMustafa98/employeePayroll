@@ -17,7 +17,7 @@ public class ViewDetails {
         usernameTextField.setText(employee.getUsername());
         passwordTextField.setText(employee.getPassword());
         nameTextField.setText(employee.getName());
-        ageTextField.setText(employee.getAge());
+        ageTextField.setText(String.valueOf(employee.getAge()));
         salaryTextField.setText(String.valueOf(employee.getBasicSalary()));
         contactTextField.setText(employee.getContact());
         departmentTextField.setText(employee.getDepartment().getName().toString());

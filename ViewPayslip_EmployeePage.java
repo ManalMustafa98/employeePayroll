@@ -5,12 +5,7 @@ import java.time.LocalDate;
 public class ViewPayslip_EmployeePage {
     private JPanel rootPanel;
     private JButton backButton;
-    private JTextField textField1;
-    private JTextField textField2;
-    private JTextField textField3;
-    private JTextField textField5;
-    private JTextField textField6;
-    private JTextField salaryTextField;
+    private JTextField basicSalaryTextField;
     private JTextField bonusTextField;
     private JTextField deductionTextField;
     private JTextField taxTextField;
@@ -34,7 +29,7 @@ public class ViewPayslip_EmployeePage {
         double net       = payroll.calculateTotalSalary();
 
         // Set text to labels
-        salaryTextField.setText("₹" + basic);
+        basicSalaryTextField.setText("₹" + basic);
         allowanceTextField.setText("₹" + allowance);
         bonusTextField.setText("₹" + bonus);
         deductionTextField.setText("₹" + deduction);
@@ -42,7 +37,7 @@ public class ViewPayslip_EmployeePage {
         totalTextField.setText("₹" + net);
 
         JTextField[] fields = {
-                salaryTextField, allowanceTextField, bonusTextField, deductionTextField,
+                basicSalaryTextField, allowanceTextField, bonusTextField, deductionTextField,
                 taxTextField, totalTextField
         };
 

@@ -122,7 +122,7 @@ public class Admin extends Users {
             Department dept = Department.getInstance(deptEnum);
 
             System.out.print("Age: ");
-            String age = scanner.nextLine();
+            int age = scanner.nextInt();
 
             System.out.print("Contact (e.g. +1234567890): ");
             String contact = scanner.nextLine();

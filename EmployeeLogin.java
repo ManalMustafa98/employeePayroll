@@ -56,7 +56,7 @@ public class EmployeeLogin {
                 if (parts[0].equals(username)) {
                     String name = parts[1];
                     String departmentName = parts[2];
-                    String age = parts[3];
+                    int age = Integer.parseInt(parts[3]);
                     String contact = parts[4];
                     double salary = Double.parseDouble(parts[5]);
 
