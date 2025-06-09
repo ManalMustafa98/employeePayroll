@@ -39,6 +39,7 @@ public class ViewDetails {
         // Back to employee page
         backButton.addActionListener(e -> {
             frame.setContentPane(new EmployeePage(frame, employee).getPanel());
+            frame.pack();
             frame.revalidate();
         });
     }

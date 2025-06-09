@@ -39,6 +39,7 @@ public class ViewPayslip_EmployeePage {
         // Back button
         backButton.addActionListener(e -> {
             frame.setContentPane(new EmployeePage(frame, currentEmployee).getPanel());
+            frame.pack();
             frame.revalidate();
         });
     }

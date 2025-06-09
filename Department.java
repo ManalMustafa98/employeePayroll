@@ -25,7 +25,7 @@ public class Department {
     private final List<Employee> employees;
 
     // Private constructor to enforce singleton-per-enum pattern
-    private Department(DepartmentName departmentName) {
+    Department(DepartmentName departmentName) {
         this.departmentName = departmentName;
         this.employees = new ArrayList<>();
     }

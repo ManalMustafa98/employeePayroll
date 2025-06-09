@@ -37,7 +37,6 @@ public class ViewEmployeeByDept_Admin {
         // 5) BACK button returns to AdminPage
         backButton.addActionListener(e -> {
             frame.setContentPane(new AdminPage(frame, admin).getPanel());
-            frame.pack();
             frame.revalidate();
         });
     }

@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.*;
+import java.util.regex.Pattern;
 
 /**
  * Admin extends Users.  Each Admin has a name, contact, generated username/password, role="admin", and an age.
@@ -13,7 +14,14 @@ public class Admin extends Users {
      */
     public Admin(String name, String contact, int age) throws IOException {
         super(name, contact, "admin");
+        if (!isValidAge(age)) {
+            throw new IllegalArgumentException("Age must be a positive integer.");
+        }
         this.age = age;
+    }
+
+    public static boolean isValidAge(int age) {
+        return Pattern.matches("^[0-9]*$", Integer.toString(age));
     }
 
     /**
