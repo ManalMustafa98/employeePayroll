@@ -22,7 +22,6 @@ public class EmployeePage {
         String month = today.getMonth().toString();
         int year = today.getYear();
 
-//        welcomeLabel.setText("Welcome, " + employee.getName() + "!");
 
         checkOutButton.addActionListener(new ActionListener() {
             @Override
