@@ -5,7 +5,7 @@ public class AddEmployee {
     private JTextField nameField;
     private JTextField ageTextField;
     private JTextField contactField;
-    private JComboBox<DepartmentName> departmentField;  // Typed to DepartmentName
+    private JComboBox<DepartmentName> departmentField;
     private JTextField salaryField;
     private JButton ADDButton;
     private JButton backButton;
@@ -18,25 +18,27 @@ public class AddEmployee {
             String salaryText = salaryField.getText().trim();
 
             try {
-                if (!Admin.isValidName(name) || !Admin.isValidContact(contact) || !Admin.isValidAge(Integer.parseInt(age))) {
-                    JOptionPane.showMessageDialog(rootPanel, "Invalid name or contact format.");
+                if (!Admin.isValidName(name) ||
+                        !Admin.isValidContact(contact) ||
+                        !Admin.isValidAge(Integer.parseInt(age))) {
+                    JOptionPane.showMessageDialog(rootPanel, "Invalid name, contact, or age.");
                     return;
                 }
 
-                String selectedDept = (String) departmentField.getSelectedItem();
-                Department department = new Department(DepartmentName.valueOf(selectedDept));
+                DepartmentName deptEnum = (DepartmentName) departmentField.getSelectedItem();
+                Department department = Department.getInstance(deptEnum);
 
                 double salary = Double.parseDouble(salaryText);
 
                 Employee emp = new Employee(name, contact, department);
-                emp.setAge(age);
+                emp.setAge(age);  // Age is stored as String
                 emp.setBasicSalary(salary);
                 emp.saveToFiles();
 
-                JOptionPane.showMessageDialog(rootPanel, "✅ Employee Created!\nUsername: " +
-                        emp.getUsername() + "\nPassword: " + emp.getPassword());
+                JOptionPane.showMessageDialog(rootPanel,
+                        "✅ Employee Created!\nUsername: " + emp.getUsername() +
+                                "\nPassword: " + emp.getPassword());
                 clearFields();
-
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(rootPanel, "❌ Error: " + ex.getMessage());
             }
@@ -62,5 +64,3 @@ public class AddEmployee {
         return rootPanel;
     }
 }
-
-
