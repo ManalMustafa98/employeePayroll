@@ -2,49 +2,29 @@ import java.io.*;
 import java.util.*;
 import java.util.regex.Pattern;
 
-/**
- * Admin extends Users.  Each Admin has a name, contact, generated username/password, role="admin", and an age.
- */
 public class Admin extends Users {
     private int age;
 
-    /**
-     * Constructor for creating a brand‐new Admin.
-     * Automatically calls Users(name, contact, "admin") to generate username/password.
-     */
+    // ✅ Constructor for creating new Admin (GUI/CLI)
     public Admin(String name, String contact, int age) throws IOException {
         super(name, contact, "admin");
         if (!isValidAge(age)) {
-            throw new IllegalArgumentException("Age must be a positive integer.");
+            throw new IllegalArgumentException("Age must be between 1 and 149.");
         }
         this.age = age;
     }
 
-    public static boolean isValidAge(int age) {
-        return Pattern.matches("^[0-9]*$", Integer.toString(age));
-    }
-
-    /**
-     * Constructor for rebuilding an Admin from file.
-     * Parameters: (username, password, name, contact).
-     * The age is stored in the details line, so setAge must be called after loading.
-     */
+    // ✅ Constructor for loading Admin from file
     public Admin(String username, String password, String name, String contact) {
         super(username, password, name, contact, "admin");
     }
 
-    /**
-     * Save both login credentials and details.
-     * In Users.java, saveToFiles() calls:
-     *   appendToFile(USERS_FILE, toUserFileLine());
-     *   appendToFile(DETAILS_FILE, toDetailsFileLine());
-     */
-    // No need to override saveToFiles()—inherit from Users
+    // ✅ Age validation logic (used in GUI/CLI)
+    public static boolean isValidAge(int age) {
+        return age > 0 && age < 150;
+    }
 
-    /**
-     * Defines how this Admin’s details are written to usersdetails.txt.
-     * Format: username,name,contact,age,admin
-     */
+    // ✅ Save Admin details to usersdetails.txt
     @Override
     public String toDetailsFileLine() {
         return String.join(",",
@@ -56,9 +36,24 @@ public class Admin extends Users {
         );
     }
 
-    /**
-     * Displays the CLI menu for this Admin (view users, add employees/admins, remove, change password).
-     */
+    // ✅ Role-restricted Super Admin check
+    protected boolean isSuperAdmin() {
+        return this.getUsername().equals(getSuperAdminUsername());
+    }
+
+    private String getSuperAdminUsername() {
+        try (BufferedReader br = new BufferedReader(new FileReader(USERS_FILE))) {
+            String firstLine = br.readLine();
+            if (firstLine != null) {
+                return firstLine.split(" ")[0];
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading super admin: " + e.getMessage());
+        }
+        return "";
+    }
+
+    // ✅ Console-based Admin Menu (if used)
     public void showMenu() {
         Scanner scanner = new Scanner(System.in);
         int choice;
@@ -73,7 +68,7 @@ public class Admin extends Users {
             System.out.println("6. Logout");
             System.out.print("Enter choice: ");
             choice = scanner.nextInt();
-            scanner.nextLine(); // consume newline
+            scanner.nextLine();
 
             switch (choice) {
                 case 1 -> viewAllUsers();
@@ -82,33 +77,33 @@ public class Admin extends Users {
                 case 4 -> removeUser(scanner);
                 case 5 -> changePassword(scanner);
                 case 6 -> System.out.println("Logging out...");
-                default -> System.out.println("\u274C Invalid choice.");
+                default -> System.out.println("❌ Invalid choice.");
             }
         } while (choice != 6);
     }
 
     private void addNewAdmin(Scanner scanner) {
         if (!isSuperAdmin()) {
-            System.out.println("\u274C Only Super Admin can add new Admins.");
+            System.out.println("❌ Only Super Admin can add new Admins.");
             return;
         }
 
         try {
             System.out.print("Enter Admin Name: ");
             String name = scanner.nextLine();
-            System.out.print("Enter Admin Contact (e.g. +1234567890): ");
+            System.out.print("Enter Contact (+92...): ");
             String contact = scanner.nextLine();
-            System.out.print("Enter Admin Age: ");
+            System.out.print("Enter Age: ");
             int age = Integer.parseInt(scanner.nextLine());
 
             Admin newAdmin = new Admin(name, contact, age);
             newAdmin.saveToFiles();
 
-            System.out.println("✅ Admin created:");
+            System.out.println("✅ Admin Created:");
             System.out.println("Username: " + newAdmin.getUsername());
             System.out.println("Password: " + newAdmin.getPassword());
         } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
+            System.out.println("❌ Error: " + e.getMessage());
         }
     }
 
@@ -117,31 +112,31 @@ public class Admin extends Users {
             System.out.print("Name: ");
             String name = scanner.nextLine();
 
-            System.out.print("Department (e.g. HR, IT, FINANCE): ");
+            System.out.print("Department (HR, IT, FINANCE...): ");
             DepartmentName deptEnum = DepartmentName.valueOf(scanner.nextLine().trim().toUpperCase());
             Department dept = Department.getInstance(deptEnum);
 
             System.out.print("Age: ");
-            int age = scanner.nextInt();
+            String age = scanner.nextLine();
 
-            System.out.print("Contact (e.g. +1234567890): ");
+            System.out.print("Contact (+92...): ");
             String contact = scanner.nextLine();
 
             System.out.print("Salary: ");
-            Double salary = scanner.nextDouble();
-            scanner.nextLine();  // consume leftover newline
+            double salary = scanner.nextDouble();
+            scanner.nextLine(); // consume newline
 
             Employee emp = new Employee(name, contact, dept);
             emp.setAge(age);
             emp.setBasicSalary(salary);
             emp.saveToFiles();
 
-            System.out.println("\u2705 Employee created:");
+            System.out.println("✅ Employee Created:");
             System.out.println("Username: " + emp.getUsername());
             System.out.println("Password: " + emp.getPassword());
         } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-            scanner.nextLine(); // clear buffer if error happens during nextDouble
+            System.out.println("❌ Error: " + e.getMessage());
+            scanner.nextLine(); // flush input
         }
     }
 
@@ -150,34 +145,34 @@ public class Admin extends Users {
         String target = scanner.nextLine();
 
         if (target.equals(this.getUsername())) {
-            System.out.println("\u274C You cannot delete your own account.");
+            System.out.println("❌ You cannot delete your own account.");
             return;
         }
         if (target.equals(getSuperAdminUsername())) {
-            System.out.println("\u274C You cannot delete the Super Admin.");
+            System.out.println("❌ Cannot delete the Super Admin.");
             return;
         }
-        if (removeLineFromFile(USERS_FILE, target) && removeLineFromFile(DETAILS_FILE, target)) {
-            System.out.println("\u2705 Removed user: " + target);
-        } else {
-            System.out.println("\u274C User not found or error during removal.");
-        }
+        boolean success = removeLineFromFile(USERS_FILE, target) &&
+                removeLineFromFile(DETAILS_FILE, target);
+
+        System.out.println(success ? "✅ Removed user: " + target : "❌ User not found.");
     }
 
     private void changePassword(Scanner scanner) {
-        System.out.print("Enter username to change password: ");
+        System.out.print("Enter username: ");
         String uname = scanner.nextLine();
         System.out.print("Enter new password: ");
         String newPass = scanner.nextLine();
 
         if (uname.equals(getSuperAdminUsername()) && !isSuperAdmin()) {
-            System.out.println("\u274C Only Super Admin can change its own password.");
+            System.out.println("❌ Only Super Admin can change its own password.");
             return;
         }
+
         if (updatePassword(uname, newPass)) {
-            System.out.println("\u2705 Password updated for " + uname);
+            System.out.println("✅ Password updated.");
         } else {
-            System.out.println("\u274C Error updating password.");
+            System.out.println("❌ Error updating password.");
         }
     }
 
@@ -186,55 +181,41 @@ public class Admin extends Users {
                 BufferedReader userReader = new BufferedReader(new FileReader(USERS_FILE));
                 BufferedReader detailReader = new BufferedReader(new FileReader(DETAILS_FILE))
         ) {
-            System.out.printf("%-12s | %-20s | %-15s | %-10s | %-10s\n",
-                    "Username", "Name", "Role", "Contact", "Extra Info");
-            System.out.println("---------------------------------------------------------------");
+            System.out.printf("%-12s | %-20s | %-10s | %-12s | %-10s\n",
+                    "Username", "Name", "Role", "Contact", "Extra");
+            System.out.println("--------------------------------------------------------");
 
             String userLine, detailLine;
             while ((userLine = userReader.readLine()) != null &&
                     (detailLine = detailReader.readLine()) != null) {
+
                 String[] u = userLine.split(" ");
                 String[] d = detailLine.split(",");
-                if (u.length < 3 || d.length < 4) continue;  // ensure enough fields
-                String username = u[0];
-                String name     = d[1];
-                String role     = u[2];
-                String contact  = u[4]; // “contact” is the 4th index in Admin’s detail line
-                String extra    = "Age: " + d[3]; // displayAdmin age in extra column
 
-                System.out.printf("%-12s | %-20s | %-15s | %-10s | %-10s\n",
-                        username, name, role, contact, extra);
+                if (u.length >= 3 && d.length >= 4) {
+                    String uname = u[0];
+                    String role = u[2];
+                    String name = d[1];
+                    String contact = d[2];
+                    String extra = d.length > 5 ? "Salary: " + d[5] : "Age: " + d[3];
+
+                    System.out.printf("%-12s | %-20s | %-10s | %-12s | %-10s\n",
+                            uname, name, role, contact, extra);
+                }
             }
         } catch (IOException e) {
-            System.out.println("Error: " + e.getMessage());
+            System.out.println("❌ Error: " + e.getMessage());
         }
     }
 
-    protected boolean isSuperAdmin() {
-        return this.getUsername().equals(getSuperAdminUsername());
-    }
-
-    private String getSuperAdminUsername() {
-        try (BufferedReader br = new BufferedReader(new FileReader(USERS_FILE))) {
-            String firstLine = br.readLine();
-            if (firstLine != null) {
-                String[] parts = firstLine.split(" ");
-                return parts[0];
-            }
-        } catch (IOException e) {
-            System.out.println("Error reading super admin: " + e.getMessage());
-        }
-        return "";
-    }
-
-    private boolean removeLineFromFile(String fileName, String username) {
-        File inputFile = new File(fileName);
-        File tempFile = new File("temp.txt");
+    private boolean removeLineFromFile(String filename, String username) {
+        File input = new File(filename);
+        File temp = new File("temp.txt");
         boolean found = false;
 
         try (
-                BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-                BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))
+                BufferedReader reader = new BufferedReader(new FileReader(input));
+                BufferedWriter writer = new BufferedWriter(new FileWriter(temp))
         ) {
             String line;
             while ((line = reader.readLine()) != null) {
@@ -246,17 +227,16 @@ public class Admin extends Users {
                 }
             }
         } catch (IOException e) {
-            System.out.println("File error: " + e.getMessage());
             return false;
         }
 
-        inputFile.delete();
-        return tempFile.renameTo(inputFile) && found;
+        input.delete();
+        return temp.renameTo(input) && found;
     }
 
     private boolean updatePassword(String username, String newPassword) {
         File inputFile = new File(USERS_FILE);
-        File tempFile  = new File("temp_users.txt");
+        File tempFile = new File("temp_users.txt");
 
         try (
                 BufferedReader reader = new BufferedReader(new FileReader(inputFile));
