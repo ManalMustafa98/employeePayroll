@@ -18,7 +18,7 @@ public class AddEmployee {
             String salaryText = salaryField.getText().trim();
 
             try {
-                if (!Admin.isValidName(name) || !Admin.isValidContact(contact) || Admin.isValidAge(Integer.parseInt(age))) {
+                if (!Admin.isValidName(name) || !Admin.isValidContact(contact) || !Admin.isValidAge(Integer.parseInt(age))) {
                     JOptionPane.showMessageDialog(rootPanel, "Invalid name or contact format.");
                     return;
                 }
@@ -62,3 +62,5 @@ public class AddEmployee {
         return rootPanel;
     }
 }
+
+
