@@ -14,11 +14,11 @@ public class AddEmployee {
         ADDButton.addActionListener(e -> {
             String name = nameField.getText().trim();
             String contact = contactField.getText().trim();
-            String age = ageTextField.getText().trim();
+            int age = Integer.parseInt(ageTextField.getText().trim());
             String salaryText = salaryField.getText().trim();
 
             try {
-                if (!Admin.isValidName(name) || !Admin.isValidContact(contact) || !Admin.isValidAge(Integer.parseInt(age))) {
+                if (!Admin.isValidName(name) || !Admin.isValidContact(contact) || !Admin.isValidAge(age)) {
                     JOptionPane.showMessageDialog(rootPanel, "Invalid name or contact format.");
                     return;
                 }

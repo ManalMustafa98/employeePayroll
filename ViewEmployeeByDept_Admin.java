@@ -8,13 +8,13 @@ public class ViewEmployeeByDept_Admin {
     private JComboBox<DepartmentName> comboBox1;
     private JList<String> list1; // Name
     private JList<String> list2; // Contact
-    private JList<String> list3; // Age
+    private JList<Integer> list3; // Age
     private JList<String> list4; // Salary
     private JButton backButton;
 
     private final DefaultListModel<String> modelName    = new DefaultListModel<>();
     private final DefaultListModel<String> modelContact = new DefaultListModel<>();
-    private final DefaultListModel<String> modelAge     = new DefaultListModel<>();
+    private final DefaultListModel<Integer> modelAge     = new DefaultListModel<>();
     private final DefaultListModel<String> modelSalary  = new DefaultListModel<>();
 
     public ViewEmployeeByDept_Admin(JFrame frame, Admin admin) {

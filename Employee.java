@@ -6,7 +6,7 @@ import java.util.Scanner;
  * Represents an Employee, extends Users.  Each Employee belongs to exactly one Department.
  */
 public class Employee extends Users {
-    private String age;
+    private int age;
     private double basicSalary;
     private Department department;
 
@@ -47,7 +47,7 @@ public class Employee extends Users {
                 getUsername(),
                 getName(),
                 deptName,
-                age,
+                Integer.toString(getAge()),
                 getContact(),
                 String.valueOf(basicSalary)
         );
@@ -83,7 +83,7 @@ public class Employee extends Users {
     }
 
     // Setter for age (String, since we want to preserve leading zeros or custom formatting)
-    public void setAge(String age) {
+    public void setAge(int age) {
         this.age = age;
     }
 
@@ -92,7 +92,7 @@ public class Employee extends Users {
         this.basicSalary = basicSalary;
     }
 
-    public String getAge() {
+    public int getAge() {
         return age;
     }
 
