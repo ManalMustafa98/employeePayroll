@@ -71,11 +71,15 @@ public class EmployeePage {
         viewDetailsButton.addActionListener(e -> {
             frame.setContentPane(new ViewDetails(frame, employee).getPanel());
             frame.revalidate();
+            frame.repaint();
+            frame.setVisible(true);
         });
 
         viewPayslipButton.addActionListener(e -> {
             frame.setContentPane(new ViewPayslip_EmployeePage(frame, employee).getPanel());
-             frame.revalidate();
+            frame.revalidate();
+            frame.repaint();
+            frame.setVisible(true);
         });
     }
 

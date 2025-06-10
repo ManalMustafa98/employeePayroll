@@ -15,9 +15,14 @@ public class EmployeeLogin {
             String inputPassword = passwordField.getText().trim();
 
             if (isValidEmployee(inputUsername, inputPassword)) {
-                Employee employee = loadEmployee(inputUsername);
-                frame.setContentPane(new EmployeePage(frame, employee).getPanel());
-                frame.revalidate();
+                Employee employee = loadEmployee(inputUsername, inputPassword);
+                if (employee != null) {
+                    frame.setContentPane(new EmployeePage(frame, employee).getPanel());
+                    frame.revalidate();
+                } else {
+                    JOptionPane.showMessageDialog(frame, "❌ Error loading employee details.");
+                }
+
             } else {
                 JOptionPane.showMessageDialog(rootPanel, "Invalid credentials!");
             }
@@ -43,7 +48,7 @@ public class EmployeeLogin {
         return false;
     }
 
-    private Employee loadEmployee(String username) {
+    private Employee loadEmployee(String username, String password) {
         try (BufferedReader br = new BufferedReader(new FileReader(Users.DETAILS_FILE))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -56,7 +61,7 @@ public class EmployeeLogin {
                     double salary = Double.parseDouble(parts[5]);
 
                     Department dept = new Department(DepartmentName.valueOf(departmentName.toUpperCase()));
-                    Employee emp = new Employee(username, "",name, contact, dept);
+                    Employee emp = new Employee(username, password ,name, contact, dept);
                     emp.setAge(age);
                     emp.setBasicSalary(salary);
                     return emp;

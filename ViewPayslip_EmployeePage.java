@@ -4,13 +4,18 @@ import java.time.LocalDate;
 
 public class ViewPayslip_EmployeePage {
     private JPanel rootPanel;
-    private JLabel basicSalaryLabel;
-    private JLabel bonusLabel;
-    private JLabel deductionLabel;
-    private JLabel taxLabel;
-    private JLabel allowanceLabel;
-    private JLabel totalLabel;
     private JButton backButton;
+    private JTextField textField1;
+    private JTextField textField2;
+    private JTextField textField3;
+    private JTextField textField5;
+    private JTextField textField6;
+    private JTextField salaryTextField;
+    private JTextField bonusTextField;
+    private JTextField deductionTextField;
+    private JTextField taxTextField;
+    private JTextField allowanceTextField;
+    private JTextField totalTextField;
 
     public ViewPayslip_EmployeePage(JFrame frame, Employee currentEmployee) {
         // Load attendance for the current month
@@ -29,17 +34,29 @@ public class ViewPayslip_EmployeePage {
         double net       = payroll.calculateTotalSalary();
 
         // Set text to labels
-        basicSalaryLabel.setText("₹" + basic);
-        allowanceLabel.setText("₹" + allowance);
-        bonusLabel.setText("₹" + bonus);
-        deductionLabel.setText("₹" + deduction);
-        taxLabel.setText("₹" + tax);
-        totalLabel.setText("₹" + net);
+        salaryTextField.setText("₹" + basic);
+        allowanceTextField.setText("₹" + allowance);
+        bonusTextField.setText("₹" + bonus);
+        deductionTextField.setText("₹" + deduction);
+        taxTextField.setText("₹" + tax);
+        totalTextField.setText("₹" + net);
+
+        JTextField[] fields = {
+                salaryTextField, allowanceTextField, bonusTextField, deductionTextField,
+                taxTextField, totalTextField
+        };
+
+        for (JTextField field : fields) {
+            field.setEditable(false);
+//            field.setBorder(null);
+            field.setBackground(null);
+            field.setForeground(Color.BLACK);
+            field.setFont(new Font("SansSerif", Font.PLAIN, 18));
+        }
 
         // Back button
         backButton.addActionListener(e -> {
             frame.setContentPane(new EmployeePage(frame, currentEmployee).getPanel());
-            frame.pack();
             frame.revalidate();
         });
     }
