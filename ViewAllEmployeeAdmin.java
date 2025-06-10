@@ -43,7 +43,6 @@ public class ViewAllEmployeeAdmin {
         // 3) Back button returns to AdminPage
         backButton.addActionListener(e -> {
             frame.setContentPane(new AdminPage(frame, currentAdmin).getPanel());
-            frame.pack();
             frame.revalidate();
         });
     }
