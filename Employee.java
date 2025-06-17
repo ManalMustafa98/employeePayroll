@@ -1,5 +1,10 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -128,4 +133,40 @@ public class Employee extends Users {
         System.out.println("Absent Days: " + attendance.getAbsentDays());
         System.out.println("Overtime Hours: " + attendance.calculateMonthlyOvertime());
     }
+    public static List<Employee> loadAll() {
+        List<Employee> list = new ArrayList<>();
+        File file = new File(Users.DETAILS_FILE);
+
+        if (!file.exists()) return list;
+
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length != 6) continue;
+
+                String username = parts[0];
+                String name = parts[1];
+                String deptStr = parts[2];
+                int age = Integer.parseInt(parts[3]);
+                String contact = parts[4];
+                double salary = Double.parseDouble(parts[5]);
+
+                DepartmentName deptName = DepartmentName.valueOf(deptStr.toUpperCase());
+                Department dept = Department.getInstance(deptName);
+
+                Employee emp = new Employee(username, "default", name, contact, dept);
+                emp.setAge(age);
+                emp.setBasicSalary(salary);
+
+                list.add(emp);
+            }
+        } catch (IOException  | IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
+
 }

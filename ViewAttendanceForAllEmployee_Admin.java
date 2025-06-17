@@ -21,17 +21,17 @@ public class ViewAttendanceForAllEmployee_Admin {
     private final DefaultListModel<String> modelStatus    = new DefaultListModel<>();
 
     public ViewAttendanceForAllEmployee_Admin(JFrame frame, Admin admin) {
-        // Attach models to the UI lists
+        // Bind models to the JList components
         listName.setModel(modelName);
         listCheckin.setModel(modelCheckin);
         listCheckout.setModel(modelCheckout);
         listOvertime.setModel(modelOvertime);
         listStatus.setModel(modelStatus);
 
-        // Load attendance data for the current month
+        // Load current month’s attendance
         loadAttendanceDataForCurrentMonth();
 
-        // Back button logic
+        // Back button returns to AdminPage
         backButton.addActionListener(e -> {
             frame.setContentPane(new AdminPage(frame, admin).getPanel());
             frame.pack();
@@ -54,6 +54,7 @@ public class ViewAttendanceForAllEmployee_Admin {
         LocalDate today = LocalDate.now();
         int currentYear = today.getYear();
         int currentMonth = today.getMonthValue();
+
         Set<String> seenUserDate = new HashSet<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
@@ -73,17 +74,17 @@ public class ViewAttendanceForAllEmployee_Admin {
                 try {
                     recordDate = LocalDate.parse(dateStr);
                 } catch (DateTimeParseException dtpe) {
-                    continue; // skip bad dates
+                    continue;
                 }
 
-                if (recordDate.getYear() != currentYear || recordDate.getMonthValue() != currentMonth)
+                if (recordDate.getYear() != currentYear || recordDate.getMonthValue() != currentMonth) {
                     continue;
+                }
 
                 String key = username + "_" + dateStr;
-                if (!seenUserDate.add(key)) continue; // avoid duplicates
+                if (!seenUserDate.add(key)) continue;
 
                 String name = lookupEmployeeName(username);
-
                 modelName.addElement(name != null ? name : username);
                 modelCheckin.addElement("null".equals(checkin) ? "--" : checkin);
                 modelCheckout.addElement("null".equals(checkout) ? "--" : checkout);
