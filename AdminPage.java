@@ -34,7 +34,6 @@ public class AdminPage {
         viewAttendanceButton.addActionListener(e -> {
             ViewAttendanceForAllEmployee_Admin viewAttPanel =
                     new ViewAttendanceForAllEmployee_Admin(frame, admin);
-            // ▶ Corrected: call instance method, not the class
             frame.setContentPane(viewAttPanel.getPanel());
             frame.revalidate();
         });
@@ -45,10 +44,12 @@ public class AdminPage {
             frame.setContentPane(viewByDeptPanel.getPanel());
             frame.revalidate();
         });
+
         removeEmployeeButton.addActionListener(e -> {
             String username = JOptionPane.showInputDialog(frame, "Enter employee username to remove:");
             if (username != null && !username.trim().isEmpty()) {
                 admin.removeEmployee(username.trim());
+                JOptionPane.showMessageDialog(frame, "✅ Employee '" + username.trim() + "' has been successfully removed.");
             }
         });
 
@@ -61,17 +62,15 @@ public class AdminPage {
             String username = JOptionPane.showInputDialog(frame, "Enter admin username to remove:");
             if (username != null && !username.trim().isEmpty()) {
                 admin.removeAdmin(username.trim());
+                JOptionPane.showMessageDialog(frame, "✅ Admin '" + username.trim() + "' has been successfully removed.");
             }
         });
-
-
 
         logoutButton.addActionListener(e -> {
             frame.setContentPane(new WelcomePage(frame).getPanel());
             frame.revalidate();
         });
 
-        // 8️⃣ Optional: Pressing Enter triggers “Add Employee” by default
         frame.getRootPane().setDefaultButton(addEmployeeButton);
     }
 
