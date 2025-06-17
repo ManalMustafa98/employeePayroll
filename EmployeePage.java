@@ -11,7 +11,6 @@ public class EmployeePage {
     private JButton viewPayslipButton;
     private JButton logoutButton;
 
-
     private Attendance currentAttendance;
     private boolean hasCheckedIn;
     private boolean hasCheckedOut;
@@ -21,16 +20,32 @@ public class EmployeePage {
         String month = today.getMonth().toString();
         int year = today.getYear();
 
+        // ✅ Load attendance from file
+        currentAttendance = Attendance.loadFromFile(employee.getUsername(), month, year);
 
-        checkOutButton.addActionListener(new ActionListener() {
+        // ✅ Determine if already checked in or out based on saved file data
+        DailyAttendance todayRecord = currentAttendance.getRecord(today);
+        hasCheckedIn = (todayRecord != null && todayRecord.getCheckIn() != null);
+        hasCheckedOut = (todayRecord != null && todayRecord.getCheckOut() != null);
+
+        // ✅ Check-in button logic
+        CHECKINButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (!hasCheckedIn) {
                     String inTime = JOptionPane.showInputDialog(frame, "Enter check-in time (e.g. 09:00):");
                     if (inTime != null && !inTime.trim().isEmpty()) {
-                        currentAttendance.checkIn(LocalDate.now(), inTime.trim());
-                        JOptionPane.showMessageDialog(frame, "✅ Checked in at " + inTime);
-                        hasCheckedIn = true;
+                        try {
+                            currentAttendance.checkIn(today, inTime.trim());
+                            currentAttendance.saveToFile(); // ✅ Persist
+                            JOptionPane.showMessageDialog(frame, "✅ Checked in at " + inTime);
+                            hasCheckedIn = true;
+                        } catch (Exception ex) {
+                            JOptionPane.showMessageDialog(frame,
+                                    "⚠ Invalid time format! Use HH:mm (e.g. 09:00)",
+                                    "Invalid Input",
+                                    JOptionPane.ERROR_MESSAGE);
+                        }
                     }
                 } else {
                     JOptionPane.showMessageDialog(frame, "⚠ You already checked in today.");
@@ -38,16 +53,24 @@ public class EmployeePage {
             }
         });
 
+        // ✅ Check-out button logic
         checkOutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (hasCheckedIn && !hasCheckedOut) {
                     String outTime = JOptionPane.showInputDialog(frame, "Enter check-out time (e.g. 17:00):");
                     if (outTime != null && !outTime.trim().isEmpty()) {
-                        currentAttendance.checkOut(LocalDate.now(), outTime.trim());
-                        currentAttendance.saveToFile();
-                        JOptionPane.showMessageDialog(frame, "✅ Checked out at " + outTime);
-                        hasCheckedOut = true;
+                        try {
+                            currentAttendance.checkOut(today, outTime.trim());
+                            currentAttendance.saveToFile(); // ✅ Persist
+                            JOptionPane.showMessageDialog(frame, "✅ Checked out at " + outTime);
+                            hasCheckedOut = true;
+                        } catch (Exception ex) {
+                            JOptionPane.showMessageDialog(frame,
+                                    "⚠ Invalid time format! Use HH:mm (e.g. 17:00)",
+                                    "Invalid Input",
+                                    JOptionPane.ERROR_MESSAGE);
+                        }
                     }
                 } else if (!hasCheckedIn) {
                     JOptionPane.showMessageDialog(frame, "⚠ You must check in first.");
@@ -57,28 +80,22 @@ public class EmployeePage {
             }
         });
 
-
-
-        logoutButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.setContentPane(new WelcomePage(frame).getPanel());
-                frame.revalidate();
-            }
-        });
-
+        // ✅ View Details
         viewDetailsButton.addActionListener(e -> {
             frame.setContentPane(new ViewDetails(frame, employee).getPanel());
             frame.revalidate();
-//            frame.repaint();
-//            frame.setVisible(true);
         });
 
+        // ✅ View Payslip
         viewPayslipButton.addActionListener(e -> {
             frame.setContentPane(new ViewPayslip_EmployeePage(frame, employee).getPanel());
             frame.revalidate();
-//            frame.repaint();
-//            frame.setVisible(true);
+        });
+
+        // ✅ Logout
+        logoutButton.addActionListener(e -> {
+            frame.setContentPane(new WelcomePage(frame).getPanel());
+            frame.revalidate();
         });
     }
 
