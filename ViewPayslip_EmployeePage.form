@@ -103,6 +103,7 @@
             </constraints>
             <properties>
               <font name="Arial" size="24" style="0"/>
+              <foreground color="-13421773"/>
               <labelFor value="6b9a6"/>
               <text value="Bonus:"/>
             </properties>
@@ -113,6 +114,7 @@
             </constraints>
             <properties>
               <font name="Arial" size="24" style="0"/>
+              <foreground color="-13421773"/>
               <labelFor value="f4d89"/>
               <text value="Tax:"/>
             </properties>
@@ -123,6 +125,7 @@
             </constraints>
             <properties>
               <font name="Arial" size="24" style="0"/>
+              <foreground color="-13421773"/>
               <labelFor value="47d38"/>
               <text value="Deduction:"/>
             </properties>
@@ -133,6 +136,7 @@
             </constraints>
             <properties>
               <font name="Arial" size="24" style="0"/>
+              <foreground color="-13421773"/>
               <labelFor value="58254"/>
               <text value="Allowance:"/>
             </properties>
@@ -143,6 +147,7 @@
             </constraints>
             <properties>
               <font name="Arial" size="24" style="0"/>
+              <foreground color="-13421773"/>
               <labelFor value="c1228"/>
               <text value="Total:"/>
             </properties>

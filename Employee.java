@@ -1,3 +1,5 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Scanner;
@@ -128,4 +130,45 @@ public class Employee extends Users {
         System.out.println("Absent Days: " + attendance.getAbsentDays());
         System.out.println("Overtime Hours: " + attendance.calculateMonthlyOvertime());
     }
+    public static void loadAllEmployeesFromFile() {
+        try (BufferedReader br = new BufferedReader(new FileReader("usersdetails.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length < 6) continue;
+
+                String username = parts[0];
+                String name = parts[1];
+                DepartmentName deptEnum = DepartmentName.valueOf(parts[2].toUpperCase());
+                int age = Integer.parseInt(parts[3]);
+                String contact = parts[4];
+                double salary = Double.parseDouble(parts[5]);
+
+                // Also get password from users.txt
+                String password = findPasswordForUsername(username);
+                if (password == null) continue;
+
+                Department dept = Department.getInstance(deptEnum);
+                Employee emp = new Employee(username, password, name, contact, dept);
+                emp.setAge(age);
+                emp.setBasicSalary(salary);
+            }
+        } catch (Exception e) {
+            System.out.println("❌ Failed to load employees: " + e.getMessage());
+        }
+    }
+
+    private static String findPasswordForUsername(String username) throws IOException {
+        try (BufferedReader br = new BufferedReader(new FileReader("users.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(" ");
+                if (parts.length >= 3 && parts[0].equals(username) && parts[2].equals("employee")) {
+                    return parts[1];
+                }
+            }
+        }
+        return null;
+    }
+
 }

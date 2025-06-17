@@ -33,6 +33,7 @@ public class AddEmployee {
                 Employee emp = new Employee(name, contact, department);
                 emp.setAge(age);  // Age is stored as String
                 emp.setBasicSalary(salary);
+                department.addEmployee(emp);
                 emp.saveToFiles();
 
                 JOptionPane.showMessageDialog(rootPanel,

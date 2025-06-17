@@ -24,6 +24,8 @@ public class ViewEmployeeByDept_Admin {
         list3.setModel(modelAge);
         list4.setModel(modelSalary);
 
+        Employee.loadAllEmployeesFromFile();
+
         // 2) Fill department dropdown with enum values
         comboBox1.setModel(new DefaultComboBoxModel<>(DepartmentName.values()));
 

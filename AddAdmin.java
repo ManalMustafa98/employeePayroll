@@ -42,6 +42,7 @@ public class AddAdmin {
     private void clearFields() {
         nameTextField.setText("");
         contactTextField.setText("");
+        ageTextField.setText("");
         addButton.setEnabled(false);
         nameTextField.requestFocusInWindow();
     }
