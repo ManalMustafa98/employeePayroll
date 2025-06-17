@@ -7,6 +7,7 @@
     </constraints>
     <properties>
       <background color="-4276546"/>
+      <enabled value="true"/>
     </properties>
     <border type="none"/>
     <children>
@@ -20,15 +21,6 @@
           <text value="Welcome To WorkFlux"/>
         </properties>
       </component>
-      <component id="e7d8a" class="javax.swing.JButton" binding="continueAsEmployeeButton" default-binding="true">
-        <constraints>
-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <font name="Arial" size="26" style="1"/>
-          <text value="Continue As Employee"/>
-        </properties>
-      </component>
       <component id="ebec9" class="javax.swing.JButton" binding="continueAsAdminButton" default-binding="true">
         <constraints>
           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
@@ -37,6 +29,15 @@
           <enabled value="true"/>
           <font name="Arial" size="26" style="1"/>
           <text value="Continue As Admin"/>
+        </properties>
+      </component>
+      <component id="62b26" class="javax.swing.JButton" binding="continueAsEmployeeButton" default-binding="true">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Arial" size="26" style="1"/>
+          <text value="Continue As Employee"/>
         </properties>
       </component>
     </children>
