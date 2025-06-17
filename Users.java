@@ -136,6 +136,21 @@ public abstract class Users {
      * Defines how user credentials are stored in users.txt:
      *   username password role
      */
+    public static String getUserRole(String username) {
+        try (BufferedReader br = new BufferedReader(new FileReader(USERS_FILE))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(" ");
+                if (parts.length >= 3 && parts[0].equals(username)) {
+                    return parts[2]; // returns the role
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("❌ Error reading user role: " + e.getMessage());
+        }
+        return null; // not found
+    }
+
     public String toUserFileLine() {
         return username + " " + password + " " + role;
     }

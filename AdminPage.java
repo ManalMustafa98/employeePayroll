@@ -8,9 +8,12 @@ public class AdminPage {
     private JButton viewAttendanceButton;
     private JButton viewByDepartmentButton;
     private JButton logoutButton;
+    private JButton removeEmployeeButton;
+    private JButton removeAdminButton;
 
     public AdminPage(JFrame frame, Admin admin) {
         addAdminButton.setVisible(admin.isSuperAdmin());
+        removeAdminButton.setVisible(admin.isSuperAdmin());
 
         addAdminButton.addActionListener(e -> {
             frame.setContentPane(new AddAdmin(frame, admin).getPanel());
@@ -42,6 +45,25 @@ public class AdminPage {
             frame.setContentPane(viewByDeptPanel.getPanel());
             frame.revalidate();
         });
+        removeEmployeeButton.addActionListener(e -> {
+            String username = JOptionPane.showInputDialog(frame, "Enter employee username to remove:");
+            if (username != null && !username.trim().isEmpty()) {
+                admin.removeEmployee(username.trim());
+            }
+        });
+
+        removeAdminButton.addActionListener(e -> {
+            if (!admin.isSuperAdmin()) {
+                JOptionPane.showMessageDialog(frame, "❌ Only Super Admin can remove admins.");
+                return;
+            }
+
+            String username = JOptionPane.showInputDialog(frame, "Enter admin username to remove:");
+            if (username != null && !username.trim().isEmpty()) {
+                admin.removeAdmin(username.trim());
+            }
+        });
+
 
 
         logoutButton.addActionListener(e -> {

@@ -74,9 +74,8 @@ public class Admin extends Users {
                 case 1 -> viewAllUsers();
                 case 2 -> addNewEmployee(scanner);
                 case 3 -> addNewAdmin(scanner);
-                case 4 -> removeUser(scanner);
-                case 5 -> changePassword(scanner);
-                case 6 -> System.out.println("Logging out...");
+                case 4 -> changePassword(scanner);
+                case 5 -> System.out.println("Logging out...");
                 default -> System.out.println("❌ Invalid choice.");
             }
         } while (choice != 6);
@@ -140,23 +139,71 @@ public class Admin extends Users {
         }
     }
 
-    private void removeUser(Scanner scanner) {
-        System.out.print("Enter username to remove: ");
-        String target = scanner.nextLine();
+//    private void removeUser(Scanner scanner) {
+//        System.out.print("Enter username to remove: ");
+//        String target = scanner.nextLine();
+//
+//        if (target.equals(this.getUsername())) {
+//            System.out.println("❌ You cannot delete your own account.");
+//            return;
+//        }
+//        if (target.equals(getSuperAdminUsername())) {
+//            System.out.println("❌ Cannot delete the Super Admin.");
+//            return;
+//        }
+//        boolean success = removeLineFromFile(USERS_FILE, target) &&
+//                removeLineFromFile(DETAILS_FILE, target);
+//
+//        System.out.println(success ? "✅ Removed user: " + target : "❌ User not found.");
+//    }
 
-        if (target.equals(this.getUsername())) {
-            System.out.println("❌ You cannot delete your own account.");
-            return;
-        }
-        if (target.equals(getSuperAdminUsername())) {
-            System.out.println("❌ Cannot delete the Super Admin.");
-            return;
-        }
-        boolean success = removeLineFromFile(USERS_FILE, target) &&
-                removeLineFromFile(DETAILS_FILE, target);
+    public void removeEmployee(String username) {
+        try {
+            String role = getRole();
+            if (!"employee".equals(role)) {
+                System.out.println("❌ User is not an employee.");
+                return;
+            }
 
-        System.out.println(success ? "✅ Removed user: " + target : "❌ User not found.");
+            boolean success = removeLineFromFile(USERS_FILE, username) &&
+                    removeLineFromFile(DETAILS_FILE, username);
+
+            if (success) {
+                System.out.println("✅ Employee removed: " + username);
+            } else {
+                System.out.println("❌ Failed to remove employee.");
+            }
+        } catch (Exception e) {
+            System.out.println("❌ Error: " + e.getMessage());
+        }
     }
+
+    public void removeAdmin(String username) {
+        try {
+            if (username.equals(this.getUsername())) {
+                System.out.println("❌ You can't remove your own account.");
+                return;
+            }
+
+            String role = getUserRole(username);
+            if (!"admin".equals(role)) {
+                System.out.println("❌ User is not an admin.");
+                return;
+            }
+
+            boolean success = removeLineFromFile(USERS_FILE, username) &&
+                    removeLineFromFile(DETAILS_FILE, username);
+
+            if (success) {
+                System.out.println("✅ Admin removed: " + username);
+            } else {
+                System.out.println("❌ Failed to remove admin.");
+            }
+        } catch (Exception e) {
+            System.out.println("❌ Error: " + e.getMessage());
+        }
+    }
+
 
     private void changePassword(Scanner scanner) {
         System.out.print("Enter username: ");
@@ -207,10 +254,10 @@ public class Admin extends Users {
             System.out.println("❌ Error: " + e.getMessage());
         }
     }
-
     private boolean removeLineFromFile(String filename, String username) {
         File input = new File(filename);
-        File temp = new File("temp.txt");
+        File temp = new File("temp_" + filename); // safer
+
         boolean found = false;
 
         try (
@@ -219,7 +266,12 @@ public class Admin extends Users {
         ) {
             String line;
             while ((line = reader.readLine()) != null) {
-                if (!line.startsWith(username + ",") && !line.startsWith(username + " ")) {
+                String trimmed = line.trim();
+
+                // Get first token of line (username)
+                String firstToken = trimmed.split("[ ,]")[0];
+
+                if (!firstToken.equals(username)) {
                     writer.write(line);
                     writer.newLine();
                 } else {
@@ -227,12 +279,19 @@ public class Admin extends Users {
                 }
             }
         } catch (IOException e) {
+            System.out.println("❌ Error while removing: " + e.getMessage());
             return false;
         }
 
-        input.delete();
-        return temp.renameTo(input) && found;
+        if (input.delete()) {
+            return temp.renameTo(input) && found;
+        } else {
+            System.out.println("❌ Failed to delete original file: " + filename);
+            return false;
+        }
     }
+
+
 
     private boolean updatePassword(String username, String newPassword) {
         File inputFile = new File(USERS_FILE);
