@@ -6,8 +6,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class ViewAttendanceForAllEmployee_Admin {
-    private JPanel      rootPanel;
-    private JButton     backButton;
+    private JPanel rootPanel;
+    private JButton backButton;
     private JList<String> listName;      // Employee Name
     private JList<String> listCheckin;   // Check-In Time
     private JList<String> listCheckout;  // Check-Out Time
@@ -21,17 +21,17 @@ public class ViewAttendanceForAllEmployee_Admin {
     private final DefaultListModel<String> modelStatus    = new DefaultListModel<>();
 
     public ViewAttendanceForAllEmployee_Admin(JFrame frame, Admin admin) {
-        // 1) Attach models to JLists
+        // Attach models to the UI lists
         listName.setModel(modelName);
         listCheckin.setModel(modelCheckin);
         listCheckout.setModel(modelCheckout);
         listOvertime.setModel(modelOvertime);
         listStatus.setModel(modelStatus);
 
-        // 2) Load only this month’s attendance data
+        // Load attendance data for the current month
         loadAttendanceDataForCurrentMonth();
 
-        // 3) Back button goes to AdminPage
+        // Back button logic
         backButton.addActionListener(e -> {
             frame.setContentPane(new AdminPage(frame, admin).getPanel());
             frame.pack();
@@ -39,17 +39,6 @@ public class ViewAttendanceForAllEmployee_Admin {
         });
     }
 
-    /**
-     * Reads ATTENDANCE_FILE and populates today’s (really, “this month’s”) attendance.
-     * Format in attendance.txt:
-     *    username,date,status,checkIn,checkOut,overtimeHours
-     *   - date is “YYYY-MM-DD” (ISO)
-     *   - status is “PRESENT” or “ABSENT”
-     *   - checkIn/checkOut are either “HH:mm” or “null”
-     *   - overtimeHours is an integer
-     *
-     * Only the first record per (username + date) is shown. We filter to the current month/year.
-     */
     private void loadAttendanceDataForCurrentMonth() {
         File file = new File(Attendance.ATTENDANCE_FILE);
         if (!file.exists()) {
@@ -63,9 +52,8 @@ public class ViewAttendanceForAllEmployee_Admin {
         }
 
         LocalDate today = LocalDate.now();
-        int currentYear  = today.getYear();
+        int currentYear = today.getYear();
         int currentMonth = today.getMonthValue();
-
         Set<String> seenUserDate = new HashSet<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
@@ -74,39 +62,31 @@ public class ViewAttendanceForAllEmployee_Admin {
                 String[] parts = line.split(",");
                 if (parts.length != 6) continue;
 
-                String username    = parts[0];
-                String dateStr     = parts[1];
-                String status      = parts[2];
-                String checkin     = parts[3];
-                String checkout    = parts[4];
+                String username = parts[0];
+                String dateStr = parts[1];
+                String status = parts[2];
+                String checkin = parts[3];
+                String checkout = parts[4];
                 String overtimeStr = parts[5];
 
                 LocalDate recordDate;
                 try {
                     recordDate = LocalDate.parse(dateStr);
                 } catch (DateTimeParseException dtpe) {
-                    // Skip malformed date
-                    continue;
+                    continue; // skip bad dates
                 }
 
-                // Filter to current month and year
-                if (recordDate.getYear() != currentYear || recordDate.getMonthValue() != currentMonth) {
+                if (recordDate.getYear() != currentYear || recordDate.getMonthValue() != currentMonth)
                     continue;
-                }
 
-                // Only show one entry per user+date
-                String userDateKey = username + "_" + dateStr;
-                if (seenUserDate.contains(userDateKey)) {
-                    continue;
-                }
-                seenUserDate.add(userDateKey);
+                String key = username + "_" + dateStr;
+                if (!seenUserDate.add(key)) continue; // avoid duplicates
 
-                // Look up the employee’s name (or use username if not found)
                 String name = lookupEmployeeName(username);
 
-                modelName.addElement((name != null) ? name : username);
-                modelCheckin.addElement(checkin.equals("null") ? "--" : checkin);
-                modelCheckout.addElement(checkout.equals("null") ? "--" : checkout);
+                modelName.addElement(name != null ? name : username);
+                modelCheckin.addElement("null".equals(checkin) ? "--" : checkin);
+                modelCheckout.addElement("null".equals(checkout) ? "--" : checkout);
                 modelOvertime.addElement(overtimeStr);
                 modelStatus.addElement(status);
             }
@@ -120,12 +100,6 @@ public class ViewAttendanceForAllEmployee_Admin {
         }
     }
 
-    /**
-     * Scans Users.DETAILS_FILE for the given username and returns the stored name.
-     * Details format (for employees) is:
-     *    username,name,department,age,contact,salary
-     * We only need parts[1] if parts.length >= 2.
-     */
     private String lookupEmployeeName(String username) {
         File file = new File(Users.DETAILS_FILE);
         if (!file.exists()) return null;
@@ -135,11 +109,10 @@ public class ViewAttendanceForAllEmployee_Admin {
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",");
                 if (parts.length >= 2 && parts[0].equals(username)) {
-                    return parts[1];
+                    return parts[1]; // name
                 }
             }
-        } catch (IOException e) {
-            // Ignore; we’ll return null and fallback to username
+        } catch (IOException ignored) {
         }
         return null;
     }

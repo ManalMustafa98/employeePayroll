@@ -25,7 +25,7 @@ public class AddEmployee {
                     return;
                 }
 
-                DepartmentName deptEnum = (DepartmentName) departmentField.getSelectedItem();
+                DepartmentName deptEnum = DepartmentName.valueOf(departmentField.getSelectedItem().toString());
                 Department department = Department.getInstance(deptEnum);
 
                 double salary = Double.parseDouble(salaryText);

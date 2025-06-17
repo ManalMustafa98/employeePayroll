@@ -6,29 +6,31 @@
       <xy x="20" y="20" width="500" height="400"/>
     </constraints>
     <properties>
-      <background color="-4276546"/>
+      <background color="-1451866"/>
       <enabled value="true"/>
     </properties>
     <border type="none"/>
     <children>
       <component id="1a301" class="javax.swing.JLabel">
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="2" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <font name="Arial" size="34" style="1"/>
-          <foreground color="-16777216"/>
+          <font name="Algerian" size="36" style="1"/>
+          <foreground color="-16766117"/>
           <text value="Welcome To WorkFlux"/>
         </properties>
       </component>
       <component id="ebec9" class="javax.swing.JButton" binding="continueAsAdminButton" default-binding="true">
         <constraints>
-          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="1" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <background color="-16084074"/>
           <enabled value="true"/>
           <font name="Arial" size="26" style="1"/>
-          <text value="Continue As Admin"/>
+          <foreground color="-1"/>
+          <text value="Login As Admin"/>
         </properties>
       </component>
       <component id="62b26" class="javax.swing.JButton" binding="continueAsEmployeeButton" default-binding="true">
@@ -36,8 +38,10 @@
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <background color="-16084074"/>
           <font name="Arial" size="26" style="1"/>
-          <text value="Continue As Employee"/>
+          <foreground color="-1"/>
+          <text value="Login As Employee"/>
         </properties>
       </component>
     </children>

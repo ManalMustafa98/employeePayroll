@@ -3,66 +3,95 @@
   <grid id="27dc6" binding="rootPanel" layout-manager="GridLayoutManager" row-count="5" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="500" height="400"/>
+      <xy x="20" y="20" width="531" height="400"/>
     </constraints>
     <properties>
-      <background color="-4276546"/>
+      <background color="-1451866"/>
     </properties>
     <border type="none"/>
     <children>
-      <component id="82d31" class="javax.swing.JButton" binding="checkInButton">
+      <grid id="98938" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints>
+          <grid row="0" column="0" row-span="5" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-16752781"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="afa2d" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="2" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font name="Algerian" size="34" style="1"/>
+              <foreground color="-8960"/>
+              <text value="Welcome, to the"/>
+            </properties>
+          </component>
+          <component id="c5712" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="1" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font name="Algerian" size="34" style="1"/>
+              <foreground color="-8960"/>
+              <text value="Employee Panel"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <component id="386c8" class="javax.swing.JButton" binding="CHECKINButton" default-binding="true">
         <constraints>
           <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <font size="20"/>
+          <background color="-16084074"/>
+          <font size="24"/>
+          <foreground color="-1"/>
           <text value="CHECKIN"/>
         </properties>
       </component>
-      <component id="83c39" class="javax.swing.JButton" binding="checkOutButton">
+      <component id="a093c" class="javax.swing.JButton" binding="checkOutButton">
         <constraints>
-          <grid row="1" column="1" row-span="2" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <font size="20"/>
+          <background color="-16084074"/>
+          <font size="24"/>
+          <foreground color="-1"/>
           <text value="CHECKOUT"/>
         </properties>
       </component>
-      <component id="3b92a" class="javax.swing.JButton" binding="viewPayslipButton">
+      <component id="c7f03" class="javax.swing.JButton" binding="viewDetailsButton">
         <constraints>
-          <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <font size="20"/>
-          <text value="VIEW PAYSLIP"/>
+          <background color="-16084074"/>
+          <font size="24"/>
+          <foreground color="-1"/>
+          <text value="VIEW DETAILS"/>
         </properties>
       </component>
-      <component id="8e7ba" class="javax.swing.JLabel" binding="welcomeLabel">
-        <constraints>
-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <font name="Arial" size="34" style="1"/>
-          <foreground color="-16777216"/>
-          <text value="WELCOME"/>
-        </properties>
-      </component>
-      <component id="631bb" class="javax.swing.JButton" binding="logoutButton">
-        <constraints>
-          <grid row="2" column="0" row-span="2" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <font size="20"/>
-          <text value="LOGOUT"/>
-        </properties>
-      </component>
-      <component id="3bcea" class="javax.swing.JButton" binding="viewDetailsButton">
+      <component id="29281" class="javax.swing.JButton" binding="viewPayslipButton">
         <constraints>
           <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <font size="20"/>
-          <text value="VIEW DETAILS"/>
+          <background color="-16084074"/>
+          <font size="24"/>
+          <foreground color="-1"/>
+          <text value="VIEW PAYSLIP"/>
+        </properties>
+      </component>
+      <component id="fa355" class="javax.swing.JButton" binding="logoutButton" default-binding="true">
+        <constraints>
+          <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Logout"/>
         </properties>
       </component>
     </children>

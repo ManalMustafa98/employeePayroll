@@ -5,8 +5,7 @@ import java.time.LocalDate;
 
 public class EmployeePage {
     private JPanel rootPanel;
-    private JLabel welcomeLabel;
-    private JButton checkInButton;
+    private JButton CHECKINButton;
     private JButton checkOutButton;
     private JButton viewDetailsButton;
     private JButton viewPayslipButton;
