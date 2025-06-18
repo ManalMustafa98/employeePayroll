@@ -48,31 +48,6 @@ public class Admin extends Users {
         return "";
     }
 
-    public void showMenu() {
-        Scanner scanner = new Scanner(System.in);
-        int choice;
-
-        do {
-            System.out.println("\n=== Admin Dashboard ===");
-            System.out.println("1. View All Users");
-            System.out.println("2. Add New Employee");
-            System.out.println("3. Add New Admin");
-            System.out.println("4. Remove User");
-            System.out.println("5. Change Password");
-            System.out.println("6. Logout");
-            System.out.print("Enter choice: ");
-            choice = scanner.nextInt();
-            scanner.nextLine();
-
-            switch (choice) {
-                case 1 -> viewAllUsers();
-                case 2 -> addNewEmployee(scanner);
-                case 3 -> addNewAdmin(scanner);
-                case 4 -> System.out.println("Logging out...");
-                default -> System.out.println("❌ Invalid choice.");
-            }
-        } while (choice != 6);
-    }
 
     private void addNewAdmin(Scanner scanner) {
         if (!isSuperAdmin()) {
@@ -261,35 +236,6 @@ public class Admin extends Users {
         return null;
     }
 
-    private void viewAllUsers() {
-        try (
-                BufferedReader userReader = new BufferedReader(new FileReader(USERS_FILE));
-                BufferedReader detailReader = new BufferedReader(new FileReader(DETAILS_FILE))
-        ) {
-            System.out.printf("%-12s | %-20s | %-10s | %-12s | %-10s\n",
-                    "Username", "Name", "Role", "Contact", "Extra");
-            System.out.println("--------------------------------------------------------");
 
-            String userLine, detailLine;
-            while ((userLine = userReader.readLine()) != null &&
-                    (detailLine = detailReader.readLine()) != null) {
-
-                String[] u = userLine.split(" ");
-                String[] d = detailLine.split(",");
-
-                if (u.length >= 3 && d.length >= 4) {
-                    String uname = u[0];
-                    String role = u[2];
-                    String name = d[1];
-                    String contact = d[2];
-                    String extra = d.length > 5 ? "Salary: " + d[5] : "Age: " + d[3];
-
-                    System.out.printf("%-12s | %-20s | %-10s | %-12s | %-10s\n",
-                            uname, name, role, contact, extra);
-                }
-            }
-        } catch (IOException e) {
-            System.out.println("❌ Error: " + e.getMessage());
-        }
-    }
 }
+

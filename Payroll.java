@@ -46,27 +46,7 @@ public class Payroll<T extends Employee> {
         return overtimeHours * OVERTIME_RATE;
     }
 
-    // 🔹 Payslip generation
- public void generatePayslip() {
-        double basic = employee.getBasicSalary();
-        double allowance = 0.10 * basic;
-        double tax = calculateTax(basic);
-        double bonus = calculateBonus();
-        double deduction = calculateDeduction();
-        double netSalary = calculateTotalSalary();
 
-        System.out.println("--------- Payslip ---------");
-        System.out.println("Username      : " + employee.getUsername());
-        System.out.println("Name          : " + employee.getName());
-        System.out.println("Department    : " + employee.getDepartment().getName());
-        System.out.println("Basic Salary  : ₹" + basic);
-        System.out.println("Allowance     : ₹" + allowance);
-        System.out.println("Overtime Bonus: ₹" + bonus);
-        System.out.println("Tax Deduction : ₹" + tax);
-        System.out.println("Leave Deduct. : ₹" + deduction);
-        System.out.println("Net Salary    : ₹" + netSalary);
-        System.out.println("---------------------------");
-    }
 
     // 🔹 Optional: Save payslip to file
     public void savePayslipToFile() {

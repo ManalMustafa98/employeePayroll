@@ -1,8 +1,7 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.util.Scanner;
+
 
 /**
  * Represents an Employee, extends Users.  Each Employee belongs to exactly one Department.
@@ -33,7 +32,7 @@ public class Employee extends Users {
     }
 
     /**
-     * (No override of saveToFiles() needed—Users.saveToFiles() will call this.toDetailsFileLine()).
+
      */
 
     /**
@@ -55,34 +54,8 @@ public class Employee extends Users {
         );
     }
 
-    /**
-     * Helper for the Swing frontend: view current month’s payslip in console.
-     */
-    public void viewPayslip(String month, int year) {
-        Attendance attendance = Attendance.loadFromFile(getUsername(), month, year);
-        Payroll<Employee> payroll = new Payroll<>(this, attendance);
-        payroll.generatePayslip();
-    }
 
-    /**
-     * CLI helper: perform a check‐in/check‐out using Scanner input (console).
-     */
-    public void performCheckInCheckOut(String month, int year) {
-        Attendance attendance = Attendance.loadFromFile(getUsername(), month, year);
-        LocalDate today = LocalDate.now();
-        Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Enter check-in time (e.g. 09:00): ");
-        String in = scanner.nextLine();
-        attendance.checkIn(today, in);
-
-        System.out.print("Enter check-out time (e.g. 17:00): ");
-        String out = scanner.nextLine();
-        attendance.checkOut(today, out);
-
-        attendance.saveToFile();
-        System.out.println("✅ Check-in and check-out recorded for " + today);
-    }
 
     // Setter for age (String, since we want to preserve leading zeros or custom formatting)
     public void setAge(int age) {
@@ -119,17 +92,7 @@ public class Employee extends Users {
     /**
      * Prints a simple attendance summary to console.
      */
-    public void viewAttendance() {
-        LocalDate today = LocalDate.now();
-        String month = today.getMonth().toString();
-        int year = today.getYear();
 
-        Attendance attendance = Attendance.loadFromFile(getUsername(), month, year);
-        System.out.println("\n--- Attendance Summary for " + getName() + " ---");
-        System.out.println("Present Days: " + attendance.getPresentDays());
-        System.out.println("Absent Days: " + attendance.getAbsentDays());
-        System.out.println("Overtime Hours: " + attendance.calculateMonthlyOvertime());
-    }
     public static void loadAllEmployeesFromFile() {
         try (BufferedReader br = new BufferedReader(new FileReader("usersdetails.txt"))) {
             String line;

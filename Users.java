@@ -55,6 +55,8 @@ public abstract class Users {
      * Admin might output:
      *   username,name,contact,age,admin
      */
+
+    // THIS IS THE OVERLOADED METHOD FOR SIR REFERNECE
     public abstract String toDetailsFileLine();
 
     /** Save login/role to users.txt and subclass details to usersdetails.txt */
